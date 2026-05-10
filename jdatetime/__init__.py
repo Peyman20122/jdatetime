@@ -20,6 +20,7 @@ __VERSION__ = '5.2.0'
 MINYEAR = 1
 MAXYEAR = 9377
 
+
 STRFTIME_MAPPING = {
     # A mapping between symbol to it's helper function and function kwargs
     # symbol: (helper_function_name, {kwargs})
@@ -123,6 +124,7 @@ def get_locale():
 
 
 class date:
+    _days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 30]
     """date(year, month, day) --> date object"""
 
     j_months_en = [
@@ -282,6 +284,65 @@ class date:
     """The smallest possible difference between
     non-equal date objects, timedelta(days=1)."""
     resolution = timedelta(1)
+    
+    @staticmethod
+    def calendar(year=None, month=None, locale=None):
+        """Display the calendar of a solar month in a weekly table.
+           If year and month are not given, it displays the current month.
+           If locale is given, the output will be in that language (fa or en), otherwise it uses the current locale.
+           Return: A (multi-line) string containing the calendar month.
+        """
+
+        j_days_in_month = date._days_in_month
+    
+        if year is None or month is None:
+            today = date.today()
+            year = today.year
+            month = today.month
+        else:
+        
+            if year < MINYEAR or year > MAXYEAR:
+                raise ValueError('year out of range')
+            if month < 1 or month > 12:
+                raise ValueError('month must be 1..12')
+
+ 
+        temp_date = date(year, month, 1, locale=locale) if locale else date(year, month, 1)
+
+  
+        if month == 12 and temp_date.isleap():
+            days_in_month = 30
+        else:
+            days_in_month = date._days_in_month[month-1]
+
+    
+        first_weekday = temp_date.weekday()
+
+    
+    
+        calendar_days = ['  '] * first_weekday + [f'{d:2d}' for d in range(1, days_in_month+1)]
+
+    
+        weeks = [calendar_days[i:i+7] for i in range(0, len(calendar_days), 7)]
+
+   
+        month_name = temp_date.jmonth()
+        title = f"{month_name} {year}".center(20)
+
+    
+        if temp_date._is_fa_locale():
+            weekday_headers = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'] 
+        else:
+            weekday_headers = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']
+
+        header_line = ' '.join(weekday_headers)
+
+    
+        lines = [title, header_line]
+        for week in weeks:
+            lines.append(' '.join(week))
+
+        return '\n'.join(lines)
 
     def isleap(self):
         """check if year is leap year
@@ -603,6 +664,8 @@ class date:
 
     def aslocale(self, locale):
         return date(self.year, self.month, self.day, locale=locale)
+    
+
 
 
 """The earliest representable date, date(MINYEAR, 1, 1)"""
@@ -1263,3 +1326,4 @@ class datetime(date):
 
     def _strftime_cap_z(self):
         return self.tzname() or ''
+
