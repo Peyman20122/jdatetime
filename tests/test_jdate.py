@@ -216,6 +216,3 @@ class TestJDate(TestCase):
 
         with self.assertRaises(ValueError):
             jdatetime.date.calendar(10000, 1)
-
-if __name__ == '__main__':
-    unittest.main()
