@@ -2,10 +2,11 @@ import datetime
 import pickle
 import time
 from unittest import TestCase
+from tests import load_pickle
 
 import jdatetime
 
-from tests import load_pickle
+
 
 
 
