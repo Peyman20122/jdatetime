@@ -6,10 +6,6 @@ from tests import load_pickle
 
 import jdatetime
 
-
-
-
-
 class TestJDate(TestCase):
     def test_as_locale_returns_same_date_with_specified_locale(self):
         jdate_en = jdatetime.date(1397, 4, 23, locale='en_US')
