@@ -7,17 +7,13 @@ import threading
 import time
 from unittest import TestCase, skipIf, skipUnless
 from zoneinfo import ZoneInfo
-
-
 import jdatetime
-
 try:
     import greenlet
 
     greenlet_installed = True
 except ImportError:
     greenlet_installed = False
-
 from tests import load_pickle
 
 
