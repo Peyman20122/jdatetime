@@ -2,9 +2,7 @@ import datetime
 import pickle
 import time
 from unittest import TestCase
-
 import jdatetime
-
 from tests import load_pickle
 
 class TestJDate(TestCase):
