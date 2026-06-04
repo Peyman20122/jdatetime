@@ -293,7 +293,7 @@ class date:
            Return: A (multi-line) string containing the calendar month.
         """
 
-        j_days_in_month = date._days_in_month
+        # j_days_in_month = date._days_in_month
     
         if year is None or month is None:
             today = date.today()
