@@ -287,10 +287,12 @@ class date:
     
     @staticmethod
     def calendar(year=None, month=None, locale=None):
-        """Display the calendar of a solar month in a weekly table.
-           If year and month are not given, it displays the current month.
-           If locale is given, the output will be in that language (fa or en), otherwise it uses the current locale.
-           Return: A (multi-line) string containing the calendar month.
+        """
+        Display the calendar of a solar month in a weekly table.
+        If year and month are not given, it displays the current month.
+        If locale is given, the output will be in that language
+        (fa or en). Otherwise it uses the current locale.
+        Return: A (multi-line) string containing the calendar month.
         """
 
         
