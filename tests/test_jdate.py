@@ -1,7 +1,6 @@
 import datetime
 import pickle
 import time
-import unittest
 from unittest import TestCase
 
 import jdatetime
