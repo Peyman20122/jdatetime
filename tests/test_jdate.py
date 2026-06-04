@@ -189,5 +189,33 @@ class TestJDate(TestCase):
         cal = jdatetime.date.calendar()
         self.assertIsInstance(cal, str)
         self.assertTrue(len(cal) > 0)
+        
+    def test_calendar_specific_month(self):
+        cal = jdatetime.date.calendar(1405, 2)
+        self.assertIn('Ordibehesht', cal)
+        self.assertIn('1405', cal)
+
+    def test_calendar_structure(self):
+        cal = jdatetime.date.calendar(1400, 1)
+        lines = cal.split('\n')
+        self.assertEqual(lines[1].strip(), 'Sa Su Mo Tu We Th Fr')
+
+    def test_calendar_persian_locale(self):
+        jdatetime.set_locale('fa_IR')
+        cal = jdatetime.date.calendar(1405, 2)
+        jdatetime.set_locale(None)
+        self.assertIn('اردیبهشت', cal)
+        self.assertIn('ش ی د س چ پ ج', cal)
+
+    def test_calendar_leap_year(self):
+        cal = jdatetime.date.calendar(1403, 12)
+        self.assertIn('30', cal)
+
+    def test_calendar_invalid_input(self):
+        with self.assertRaises(ValueError):
+            jdatetime.date.calendar(1405, 13)
+
+        with self.assertRaises(ValueError):
+            jdatetime.date.calendar(10000, 1)
 
 
